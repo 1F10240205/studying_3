@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>INIAD掲示板</title>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <h1>INIAD掲示板</h1>
+    <h2>{{ article.title }}</h2>
+    <small>{{user.username}}:{{ article.posted_at }}</small>
+    <div>{{ article.body | linebreaksbr }}</div>
+
+    <h2>Comments</h2>
+    <form action="{% url 'content' article.id %}" method="post">
+      {% csrf_token %}
+      <div>
+        <label for="textInput">Text</label><br />
+        <textarea id="textInput" name="text" rows="3"></textarea>
+      </div>
+      <div>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+    {% if comments %} {% for comment in comments %}
+    <div class="text">
+      <small>{{user.username}}:[{{ comment.posted_at }}]</small>
+      <div>{{ comment.text | linebreaksbr }}</div>
+    </div>
+    {% endfor %} {% else %}
+    <p>No comment.</p>
+    {% endif %}
+    <hr />
+    <p>
+      <a href="{% url 'main' %}">Top</a> |
+      <a href="{% url 'content' article.id %}">Edit</a> |
+      <a href="{% url 'content' article.id %}">Delete</a>
+    </p>
+  </body>
+</html>

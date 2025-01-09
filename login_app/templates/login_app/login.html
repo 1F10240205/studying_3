@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'login_app/css/login.css' %}" />
+    <title>INIAD掲示板</title>
+  </head>
+  <body>
+    <h1>INIAD掲示板</h1>
+    <form action="{% url 'login' %}" method="post">
+      {% csrf_token %} {{ form.as_p }}
+      <p><input type="hidden" name="next" value="{{next}}" /></p>
+      <p><input type="submit" value="ログイン" /></p>
+    </form>
+    <form action="{% url 'signup' %}" method="post">
+      {% csrf_token %}
+      <p><input type="submit" value="新規登録" /></p>
+    </form>
+  </body>
+</html>
